@@ -86,9 +86,7 @@ function CALL(){
 
 QUESTION: Qual è l'attuale posizione del veicolo?
 	- STRADA => let posVeicolo = strada;
-	- GARAGE => let posVeicolo = garage; (ipotizziamo un garage in piano, per semplicità)
-
-let SerraturaLock = true; // variabile garage
+	- GARAGE => let posVeicolo = garage; //ipotizziamo un garage in piano, per semplicità
 
 IF (posVeicolo === strada) {
 	- Estrarre la chiave dell'auto dalla tasca;
@@ -99,6 +97,7 @@ IF (posVeicolo === strada) {
 
 } ELSE IF (posVeicolo === garage) {
 	
+	- let SerraturaLock = true;
 	- GARAGE();
 }
 
@@ -132,11 +131,11 @@ IF (posVeicolo === strada) {
 	    - Manterere velocità moderata: con andamento lento e servosterzo danneggiato si blocca quasi del tutto il volante!;
 	    - Sterzare il meno possibile;
 
-- TEST1: IL GUASTO È ABBASTANZA GRAVE DA IMPEDIRE L'UTILIZZO?
+- TEST1: IL GUASTO È ABBASTANZA GRAVE DA IMPEDIRE L'UTILIZZO DEL MEZZO?
 	- YES => CHIAMATA; // Meccanico e/o Carro attrezzi
 	- NO => TEST2;
 
-- TEST2: DISTANZA OFFICINA ACCETTABILE (< 5km, diciamo)?
+- TEST2: LA DISTANZA DALL'OFFICINA PIÙ VICINA È ACCETTABILE? (< 5km, diciamo)
 	
 	- YES => GUIDA;
 	- NO => CHIAMATA; // Meccanico e/o Carro attrezzi
@@ -157,7 +156,7 @@ GUIDA:
 	perStrada = true;
 	let km = 0;
 	
-	- WHILE(km < 5) {
+	WHILE(km < 5) {
 		DRIVE();
 		km++		
 	};
