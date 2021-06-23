@@ -1,0 +1,186 @@
+Pronto per uscire in auto, posizionato davanti al veicolo.
+L'utente NON è a conoscenza del guasto.
+
+function ENTRAAUTO(){
+	- Allungare mano verso la maniglia della portiera;
+	- Tirare la suddetta maniglia, portiera si apre;
+	- Inserire gamba destra nel veicolo;
+	- Attenzione a non sbattere la testa, portare posteriore sul sedile;
+	- Inserire gamba sinistra nel veicolo;
+	- Allacciare cintura di sicurezza;
+	- Premere frizione;
+	- Inserire prima marcia;   // La prima volta, il motore è ancora spento!
+}
+
+function ESCIAUTO(){  //ENTRAAUTO invertita
+	
+	- Inserire marcia in folle;
+	- Allungare mano verso la maniglia della portiera;
+	- Tirare suddetta maniglia, portiera si apre;
+	- Slacciare cintura di sicurezza;
+	- Estrarre gamba sinistra dal veicolo;
+	- Estrarre gamba destra dal veicolo;
+	- Attenzione a non sbattere la testa, portare posteriore fuori dall'auto;
+	- Spingere portiera verso veicolo, per chiuderla;
+}
+
+function GARAGE(){
+
+	- Raggiungere il portellone del garage;
+
+	IF (SerraturaLock === true) {
+		- Sbloccare la serratura;
+		- SerraturaLock = false
+		- Aprire il portellone => ENTRAAUTO();
+	} ELSE {
+		- Chiudere il portellone;
+		- Bloccare la serratura;
+		- SerraturaLock = true;
+	}
+}
+
+function DRIVE(){	
+
+	- Ricordare TIPS, sempre!;
+	- Sollevare gentilmente il piede sinistro dal pedale della frizione && dare gradualmente gas;
+
+	- IF(perStrada === true) {
+
+		- IF (giriMotore > 2.5k) {
+			- Premere a fondo frizione;
+			- Impugnare leva del cambio;
+			- Scalare alla marcia successiva;
+		} ELSE IF (giriMotore < 1.5k) {
+			- Premere a fondo frizione;
+			- Impugnare leva del cambio;
+			- Scalare alla marcia precedente;
+		}
+	}
+}
+
+function SEARCH(){
+	- Aprire il browser Internet;
+	- Digitare "meccanici vicino a me" nella barra di ricerca;
+	- Cerca;
+	- Individuare il numero di un meccanico;
+	- Salvarlo in rubrica;
+	- CALL();
+}
+
+function CALL(){
+	- Entrare in rubrica;
+	- Trovare il meccanico;
+		loop1:
+		FOR (x = 0; x < 3; x++) {
+			- Premere "Chiama";
+			- Attendere risposta;
+			IF (risposta) {
+				- Spiegare il problema;
+				- Accordarsi per orario;
+				- Mettere giù; // break loop1;
+			}
+		}
+
+	- SEARCH();
+}
+
+QUESTION: Qual è l'attuale posizione del veicolo?
+	- STRADA => let posVeicolo = strada;
+	- GARAGE => let posVeicolo = garage; (ipotizziamo un garage in piano, per semplicità)
+
+let SerraturaLock = true; // variabile garage
+
+IF (posVeicolo === strada) {
+	- Estrarre la chiave dell'auto dalla tasca;
+	- Inserirla nel cilindro serratura;
+	- Girarla verso sinistra (di solito);
+	- Estrarre la chiave
+	- ENTRAAUTO();
+
+} ELSE IF (posVeicolo === garage) {
+	
+	- GARAGE();
+}
+
+	TIPO DI ACCENSIONE?
+
+		- CHIAVE   => let startType = key;
+		- PULSANTE => let startType = button;
+			
+
+		    IF (startType === key) {
+
+			- Inserire chiave nell'interruttore di accensione;
+			- Premere a fondo la frizione, poi girare la chiave verso il motore;
+			- READY;
+
+		    } ELSE IF (startType === button) {
+
+			- Spingere a fondo la frizione;
+			- Premere pulsante di accensione;
+			- READY;
+
+		    }
+
+- READY: Seduto in auto, display lampeggiante: "Guasto al servosterzo!" => bestemmie.
+	
+	- Riconoscere il problema: servosterzo rotto ->
+	  - Se è assolutamente NECESSARIO mettersi in strada, ricorda:
+
+	    TIPS:	
+
+	    - Manterere velocità moderata: con andamento lento e servosterzo danneggiato si blocca quasi del tutto il volante!;
+	    - Sterzare il meno possibile;
+
+- TEST1: IL GUASTO È ABBASTANZA GRAVE DA IMPEDIRE L'UTILIZZO?
+	- YES => CHIAMATA; // Meccanico e/o Carro attrezzi
+	- NO => TEST2;
+
+- TEST2: DISTANZA OFFICINA ACCETTABILE (< 5km, diciamo)?
+	
+	- YES => GUIDA;
+	- NO => CHIAMATA; // Meccanico e/o Carro attrezzi
+
+GUIDA:
+
+	let perStrada = false;
+	let giriMotore = 0;
+
+	DRIVE();
+
+	IF (posVeicolo === garage) {
+		- ESCIAUTO();
+		- GARAGE();
+		- ENTRAAUTO();
+	}
+
+	perStrada = true;
+	let km = 0;
+	
+	- WHILE(km < 5) {
+		DRIVE();
+		km++		
+	};
+
+	------ DONE! ------
+
+CHIAMATA:
+	
+	let isMechHere = false;
+
+	- Prendere telefono dalla tasca;
+	- Sbloccare telefono;
+
+	- QUESTION: Conosco il numero del meccanico?
+		NO => SEARCH();
+		YES => CALL();
+
+	while (isMechHere === false){
+		// wait...
+		setTimeout(function(){ isMechHere = true }, 1000000); // Circa 15 minuti. Impossibile, già.
+	}
+
+	- Consegnare chiavi auto al meccanico;
+
+	------ DONE! ------
+
